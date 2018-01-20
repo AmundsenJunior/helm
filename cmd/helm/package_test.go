@@ -96,6 +96,12 @@ func TestPackage(t *testing.T) {
 			hasfile: "alpine-0.1.0.tgz",
 		},
 		{
+			name:	"package testdata/testcharts/chart",
+			args:	[]string{"testdata/testcharts/chart"},
+			expect:  "",
+			hasfile: "alpine-0.1.0.tgz",
+		},
+		{
 			name:    "package --destination toot",
 			args:    []string{"testdata/testcharts/alpine"},
 			flags:   map[string]string{"destination": "toot"},
@@ -113,7 +119,7 @@ func TestPackage(t *testing.T) {
 			name:    "package --sign --key=KEY --keyring=KEYRING testdata/testcharts/alpine",
 			args:    []string{"testdata/testcharts/alpine"},
 			flags:   map[string]string{"sign": "1", "keyring": "testdata/helm-test-key.secret", "key": "helm-test"},
-			expect:  "",
+			expect:  " ",
 			hasfile: "alpine-0.1.0.tgz",
 		},
 		{
