@@ -72,24 +72,6 @@ func TestValidateChartName(t *testing.T) {
 	}
 }
 
-func TestValidateChartNameDirMatch(t *testing.T) {
-	err := validateChartNameDirMatch(goodChartDir, goodChart)
-	if err != nil {
-		t.Errorf("validateChartNameDirMatch to return no error, gor a linter error")
-	}
-	// It has not name
-	err = validateChartNameDirMatch(badChartDir, badChart)
-	if err == nil {
-		t.Errorf("validatechartnamedirmatch to return a linter error, got no error")
-	}
-
-	// Wrong path
-	err = validateChartNameDirMatch(badChartDir, goodChart)
-	if err == nil {
-		t.Errorf("validatechartnamedirmatch to return a linter error, got no error")
-	}
-}
-
 func TestValidateChartVersion(t *testing.T) {
 	var failTest = []struct {
 		Version  string
@@ -226,7 +208,7 @@ func TestChartfile(t *testing.T) {
 	Chartfile(&linter)
 	msgs := linter.Messages
 
-	if len(msgs) != 4 {
+	if len(msgs) != 3 {
 		t.Errorf("Expected 3 errors, got %d", len(msgs))
 	}
 
@@ -234,15 +216,11 @@ func TestChartfile(t *testing.T) {
 		t.Errorf("Unexpected message 0: %s", msgs[0].Err)
 	}
 
-	if !strings.Contains(msgs[1].Err.Error(), "directory name (badchartfile) and chart name () must be the same") {
-		t.Errorf("Unexpected message 1: %s", msgs[1].Err)
-	}
-
-	if !strings.Contains(msgs[2].Err.Error(), "version 0.0.0 is less than or equal to 0") {
+	if !strings.Contains(msgs[1].Err.Error(), "version 0.0.0 is less than or equal to 0") {
 		t.Errorf("Unexpected message 2: %s", msgs[2].Err)
 	}
 
-	if !strings.Contains(msgs[3].Err.Error(), "icon is recommended") {
+	if !strings.Contains(msgs[2].Err.Error(), "icon is recommended") {
 		t.Errorf("Unexpected message 3: %s", msgs[3].Err)
 	}
 
